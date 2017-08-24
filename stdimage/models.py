@@ -75,6 +75,8 @@ class StdImageFieldFile(ImageFieldFile):
         with storage.open(file_name) as f:
             with Image.open(f) as img:
                 save_kargs = {}
+                if 'processor' in variation:
+                    img = variation['processor'](img)
                 file_format = img.format
 
                 if cls.is_smaller(img, variation):
